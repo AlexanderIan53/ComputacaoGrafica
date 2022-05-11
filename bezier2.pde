@@ -80,3 +80,4 @@ void mousePressed() {
     pontoSelecionado = p;
     pontos.add(p);
   }
+  }

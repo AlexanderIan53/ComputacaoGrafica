@@ -13,7 +13,7 @@ void draw()
   translate(200,0);
   fill(0,0,255);
   //circle(0,0,50);
-  rotate(frameCount*(TWO_PI)/(60*1));
+  rotate(frameCount*(TWO_PI)/(60*5));
   translate(60,0);
   fill(50);
   circle(0,0,1);

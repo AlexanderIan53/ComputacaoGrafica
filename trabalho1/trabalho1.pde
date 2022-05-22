@@ -42,7 +42,6 @@ void drawA(){
   }
   float a = -TWO_PI/n;
   int r = 120;
-  translate(width/2,height/2);
   noFill();
   beginShape();
   for(int i=0; i<n; i++)

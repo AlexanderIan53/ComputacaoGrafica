@@ -21,7 +21,7 @@ popMatrix();
   drawE();
   //drawF();
   //drawG();
-  //drawH();
+  drawH();
   //drawHH();
   
   
@@ -97,7 +97,6 @@ void drawE(){
   pushMatrix();
   noStroke();
   translate(450,450);
-  translate(width/2,height/2);
   fill(255,255,0);
   noStroke();
   circle(0,0,100);
@@ -116,6 +115,26 @@ void drawE(){
 
 //void drawG(){}
 
-//void drawH(){}
+float centerX;
+float centerY;
+int speed = 3;
+float d =10;
+centerX = 450;
+centerY = 750;
+
+void drawH() {
+  pushMatrix();
+  noStroke();
+  translate(450,750);
+  stroke(255);
+  strokeWeight(2);
+  noFill();
+  ellipse(centerX, centerY, d, d);
+  d = d + speed;
+  if (d > width || d < 10) {
+    speed=-speed;
+  }
+  popMatrix();
+}
 
 //void drawHH(){}

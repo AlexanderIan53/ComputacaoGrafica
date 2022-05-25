@@ -49,7 +49,7 @@ void draw(){
   // Sol e Lua mais distantes
   fill(150,0,150);
   rect(1*videoScale, 1*videoScale, videoScale, videoScale);
-  //drawE();
+  drawE();
   
   
   fill(255,200,200);
@@ -68,7 +68,7 @@ void draw(){
   
   noFill();
   rect(2*videoScale, 2*videoScale, videoScale, videoScale);
-  //drawHH();
+  drawHH();
   
 }
 
@@ -193,8 +193,6 @@ void drawH() {
   pushMatrix();
   translate(0,0);
   translate(450,750);
-  stroke(255);
-  strokeWeight(2);
   ellipse(450, 750, d, d);
   d = d + speed;
   if (d > width || d < 10) {
@@ -210,11 +208,9 @@ int x;
  }
  pushMatrix();
  translate(0,0);
- translate(750,750);// bring zero point to the center
- stroke(0);
+ translate(750,750);
  point (sin(radians(x))*50,cos(radians(x))*50);
  point (sin(radians(x))*25,cos(radians(x))*25);
- stroke(255);
- point (sin(radians(x))*50,cos(radians(x))*25);//<ellipse
+ point (sin(radians(x))*50,cos(radians(x))*25);
  popMatrix();
 }

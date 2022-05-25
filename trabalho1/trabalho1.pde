@@ -30,7 +30,7 @@ void draw(){
   }
   fill(255, 204, 0);
   rect(1*videoScale, 0*videoScale, videoScale, videoScale);
-  //drawB(ax,ay,bx,by,nivel);
+  drawB(ax,ay,bx,by,nivel);
   //drawB(100,100,590,100,nivel);
   
   
@@ -41,9 +41,9 @@ void draw(){
   
   
   // Rastro da Lua 
-  fill(0, 0, 255);
+  noFill();
   rect(0*videoScale, 1*videoScale, videoScale, videoScale);
-  //drawD();
+  drawD();
   
   
   // Sol e Lua mais distantes
@@ -98,10 +98,9 @@ void drawA(){
 }
 
  void drawB(float Ax, float Ay, float Bx, float By, int nivel){
-   pushMatrix();
+  
     float ax, ay, bx, by;
-    float cx, cy, dx, dy, ex, ey;
-    
+    float cx, cy, dx, dy, ex, ey;    
     ax = Ax;
     ay = Ay;
     bx = Bx;
@@ -127,7 +126,7 @@ void drawA(){
     drawB(ex,ey,dx,dy,nivel-1);
     drawB(dx,dy,bx,by,nivel-1);
     
-   popMatrix();
+  
  }
 
 void drawC(){

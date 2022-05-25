@@ -168,7 +168,6 @@ void drawD(){
 }
 
 void drawE(){
-  void drawE(){
   pushMatrix();
   translate(0,0);
   translate(450,450);
@@ -183,6 +182,10 @@ void drawE(){
   translate(30,0);
   fill(50);
   circle(0,0,7);
+  rotate(frameCount*(TWO_PI)/(60*1));
+  translate(10,0);
+  fill(50);
+  circle(0,0,5);
   popMatrix();
 }
 }

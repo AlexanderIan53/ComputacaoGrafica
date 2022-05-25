@@ -168,21 +168,23 @@ void drawD(){
 }
 
 void drawE(){
+  void drawE(){
   pushMatrix();
   translate(0,0);
   translate(450,450);
   fill(255,255,0);
   noStroke();
-  circle(0,0,100);
+  circle(0,0,70);
   rotate(frameCount*(TWO_PI)/(60*10));
-  translate(200,0);
+  translate(100,0);
   fill(0,0,255);
-  circle(0,0,50);
+  circle(0,0,25);
   rotate(frameCount*(TWO_PI)/(60*1));
-  translate(60,0);
+  translate(30,0);
   fill(50);
-  circle(0,0,1);
+  circle(0,0,7);
   popMatrix();
+}
 }
 
 //void drawF(){}

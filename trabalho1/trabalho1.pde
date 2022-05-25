@@ -13,7 +13,7 @@ void draw(){
   // Polígono regular de N lados inscrito em um círculo.
   fill(0,255,0);
   rect(0*videoScale, 0*videoScale, videoScale, videoScale);
-  //drawA();
+  drawA();
 
   
   // Koch -> Falta fechar ele 
@@ -37,7 +37,7 @@ void draw(){
   // Sol e Lua 
   fill(50, 55, 100);
   rect(2*videoScale, 0*videoScale, videoScale, videoScale);
-  //drawC();
+  drawC();
   
   
   // Rastro da Lua 

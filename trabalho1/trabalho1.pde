@@ -64,7 +64,7 @@ void draw(){
   
   fill(204, 102, 0);
   rect(1*videoScale, 2*videoScale, videoScale, videoScale);
-  //drawH();
+  drawH();
   
   noFill();
   rect(2*videoScale, 2*videoScale, videoScale, videoScale);
@@ -184,20 +184,31 @@ void drawE(){
 
 //void drawG(){}
 
-
-int speed = 3;
-float d =10;
-
+float a = 0;
 void drawH() {
-  pushMatrix();
   translate(0,0);
-  translate(450,750);
-  ellipse(450, 750, d, d);
-  d = d + speed;
-  if (d > width || d < 10) {
-    speed=-speed;
-  }
+  pushMatrix();
+  translate(400,700);
+  rotate(a);
+  rect(-26, -26, 52, 52);
   popMatrix();
+  pushMatrix();
+  translate(400,800);
+  rotate(a);
+  rect(-26, -26, 52, 52);
+  popMatrix();
+  pushMatrix();
+  translate(500,700);
+  rotate(a);
+  rect(-26, -26, 52, 52);
+  popMatrix();
+  pushMatrix();
+  translate(500,800);
+  rotate(a);
+  rect(-26, -26, 52, 52);
+  popMatrix();
+  a+=0.05;
+  
 }
 
 int x;

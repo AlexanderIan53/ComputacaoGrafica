@@ -91,17 +91,19 @@ Koch(c,e,nivel-1);
 Koch(e,d,nivel-1);
 Koch(d,b,nivel-1);
 }
+
+int y = 0;
  void drawB(){ 
   pushMatrix();
   //Altera o nivel da curva de Koch
   if (frameCount % (2*int(frameRate)) == 0) {
-    selectedVertex_1_2++;
-    if (selectedVertex_1_2 == vertex_1_2.length){
-      selectedVertex_1_2 = 0;   
+    y++;
+    if (y > 6){
+      y = 0;   
     }
   }
   
-  int n = (vertex_1_2[selectedVertex_1_2 % vertex_1_2.length]);
+  int n = y;
   float a = -TWO_PI/4;
   int r = 4 * (width/3)/10;
   translate(width * 3/6,height/6);

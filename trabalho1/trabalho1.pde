@@ -10,57 +10,33 @@ void setup(){
 
 void draw(){
 
-  // Polígono regular de N lados inscrito em um círculo.
   fill(0,255,0);
   rect(0*videoScale, 0*videoScale, videoScale, videoScale);
   drawA();
 
-  
-  // Koch -> Falta fechar ele 
-  float ax, ay, bx, by;
-  ax = 310;
-  ay = 100;
-  bx = 590;
-  by = 100;
-  if (frameCount%(2*int(frameRate)) == 0){
-   if (nivel > 6){
-      nivel = 0;
-   }
-   nivel++;
-  }
   fill(255, 204, 0);
   rect(1*videoScale, 0*videoScale, videoScale, videoScale);
-  drawB(ax,ay,bx,by,nivel);
-  //drawB(100,100,590,100,nivel);
-  
-  
-  // Sol e Lua 
+  drawB();
+
   fill(50, 55, 100);
   rect(2*videoScale, 0*videoScale, videoScale, videoScale);
   drawC();
   
-  
-  // Rastro da Lua 
   noFill();
   rect(0*videoScale, 1*videoScale, videoScale, videoScale);
   drawD();
-  
-  
-  // Sol e Lua mais distantes
+   
   fill(150,0,150);
   rect(1*videoScale, 1*videoScale, videoScale, videoScale);
   drawE();
   
-  
   fill(255,200,200);
   rect(2*videoScale, 1*videoScale, videoScale, videoScale);
-  //drawF();
-  
+  drawF();
   
   fill(255,0,0,255);
   rect(0*videoScale, 2*videoScale, videoScale, videoScale);
   //drawG();
-  
   
   fill(204, 102, 0);
   rect(1*videoScale, 2*videoScale, videoScale, videoScale);
@@ -69,7 +45,6 @@ void draw(){
   noFill();
   rect(2*videoScale, 2*videoScale, videoScale, videoScale);
   drawHH();
-  
 }
 
 
@@ -97,37 +72,55 @@ void drawA(){
   popMatrix();
 }
 
- void drawB(float Ax, float Ay, float Bx, float By, int nivel){
-  
-    float ax, ay, bx, by;
-    float cx, cy, dx, dy, ex, ey;    
-    ax = Ax;
-    ay = Ay;
-    bx = Bx;
-    by = By;
-    
-    
-    if(nivel == 0){
-     line(ax,ay,bx,by);
-     return;
+void Koch(PVector a,PVector b,int nivel){
+float ax = a.x;
+float ay = a.y;
+float bx = b.x;
+float by = b.y;
+float teta = PI/3;
+if(nivel==0){
+line(ax,ay,bx,by);
+return;
+}
+//calcular c,d,e
+PVector c = new PVector(((b.x-a.x)*1/3) + a.x,((b.y-a.y)*1/3) + a.y);
+PVector d = new PVector(((b.x-a.x)*2/3) + a.x,((b.y-a.y)*2/3) + a.y);
+PVector e = new PVector((((d.x-c.x)*cos(teta))+((d.y-c.y)*sin(teta)))+c.x,(((d.y-c.y)*cos(teta))-((d.x-c.x)*sin(teta)))+c.y);
+Koch(a,c,nivel-1);
+Koch(c,e,nivel-1);
+Koch(e,d,nivel-1);
+Koch(d,b,nivel-1);
+}
+ void drawB(){ 
+  pushMatrix();
+  //Altera o nivel da curva de Koch
+  if (frameCount % (2*int(frameRate)) == 0) {
+    selectedVertex_1_2++;
+    if (selectedVertex_1_2 == vertex_1_2.length){
+      selectedVertex_1_2 = 0;   
     }
-
-    cx = (bx-ax)*1/3 + ax ;
-    cy = (by-ay)*1/3 + ay;
-
-    dx = (bx-ax)*2/3 + ax;
-    dy = (by-ay)*2/3 + ay;
-
-    ex = ((dx-cx)*cos(PI/3) + (dy-cy)*sin(PI/3) )+cx;
-    ey = ((dy-cy)*cos(PI/3) - (dx-cx)*sin(PI/3) )+cy;
-
-    drawB(ax,ay,cx,cy,nivel-1);
-    drawB(cx,cy,ex,ey,nivel-1);
-    drawB(ex,ey,dx,dy,nivel-1);
-    drawB(dx,dy,bx,by,nivel-1);
-    
+  }
   
- }
+  int n = (vertex_1_2[selectedVertex_1_2 % vertex_1_2.length]);
+  float a = -TWO_PI/4;
+  int r = 4 * (width/3)/10;
+  translate(width * 3/6,height/6);
+  noFill();
+  stroke(0,0,0);
+  beginShape();
+    PVector A = new PVector (r*cos(0*a),r*sin(0*a));
+    PVector B = new PVector (r*cos(1*a),r*sin(1*a));
+    PVector C = new PVector (r*cos(2*a),r*sin(2*a));
+    PVector D = new PVector (r*cos(3*a),r*sin(3*a));
+    for(int i=0; i<n; i++) {
+      Koch(A,B,n);
+      Koch(B,C,n);
+      Koch(C,D,n);
+      Koch(D,A,n);
+    }
+  endShape(CLOSE);
+  popMatrix();
+}
 
 void drawC(){
   pushMatrix();
@@ -180,7 +173,22 @@ void drawE(){
   popMatrix();
 }
 
-//void drawF(){}
+float u = 0;
+void drawF(){
+  pushMatrix();  
+  translate(0,0);
+  translate(750,450);
+  strokeCap(ROUND);
+  strokeWeight(5);
+  stroke(0,0,0);
+   if (frameCount % 1 == 0 && u <= 360) {
+     float xu = 30 * cos(u) * (exp(cos(u)) - 2 * cos(4 * u) - sin(pow((u/12), 5)));
+     float yu = 30 * sin(u) * (exp(cos(u)) - 2 * cos(4 * u) - sin(pow((u/12), 5)));
+     point(xu,yu);
+     u++;
+   }
+   popMatrix();
+}
 
 //void drawG(){}
 

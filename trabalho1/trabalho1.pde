@@ -181,7 +181,7 @@ void drawF(){
   translate(0,0);
   translate(750,450);
   strokeCap(ROUND);
-  strokeWeight(5);
+  strokeWeight(2);
   stroke(0,0,0);
    if (frameCount % 1 == 0 && u <= 360) {
      float xu = 30 * cos(u) * (exp(cos(u)) - 2 * cos(4 * u) - sin(pow((u/12), 5)));

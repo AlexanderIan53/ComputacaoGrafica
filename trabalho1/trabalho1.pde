@@ -192,25 +192,26 @@ void drawF(){
    popMatrix();
 }
 
-float a= 0.2;
-float b= 0.7;
-float R = 10;
-float q1 = 3;
-float q2 = 4;
-float u = 0;
+ArrayList<PVector> angulo = new ArrayList<PVector>();
 void drawG(){
 pushMatrix();  
   translate(0,0);
   translate(150,750);
-  float xr = R * (1 +a*cos(2u+q1));
-  float yr = R * (b*cos(3u+q2));
-  ellipseMode(CENTER);
-  noStroke();
-  fill(200);
-  ellipse(xr, yr, 32, 32); 
-  u += q1;
-  q2 += u;
-   }
+  beginShape();
+  for (PVector v : angulo){
+    vertex(v.x, v.y);
+  }
+  endShape(CLOSE);
+  float a = 0.2;
+  float b = 0.7;
+  float R = 10;
+  float q1 = 3;
+  float q2 = 4;
+  float uu = 0;
+   float x = R * (1 +A*cos(2uu+q1));
+   float y = R * (b*cos(3uu+q2));
+   angulo.add(new PVector(x,y));
+   a += 0.01;
    popMatrix();
  }
 

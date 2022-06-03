@@ -192,7 +192,26 @@ void drawF(){
    popMatrix();
 }
 
-//void drawG(){}
+float a= 0.2;
+float b= 0.7;
+float R = 10;
+float q1 = 3;
+float q2 = 4;
+float u = 0;
+void drawG(){
+pushMatrix();  
+  translate(0,0);
+  translate(150,750);
+  strokeCap(ROUND);
+  strokeWeight(2);
+  stroke(0,0,0);
+   if (frameCount % 1 == 0 && u <= 360) {
+     float r = R(1 +a*cos(2u+q1) +b*cos(3u+q2));
+     point(r);
+     u++;
+   }
+   popMatrix();
+ }
 
 float a = 0;
 void drawH() {

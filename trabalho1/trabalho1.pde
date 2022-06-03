@@ -205,13 +205,14 @@ pushMatrix();
   translate(150,750);
   beginShape();
   for (PVector v : angulo){
-  for(float uu = 0; uu < TWO_PI; uu += 0.01) {
   vertex(v.x, v.y);
-  } 
+  if (uu > TWO_PI){
+     uu = 0;
+   }
   }
   endShape(CLOSE);
-  float x = R * (1 +a*cos(2*uu+q1));
-   float y = R * (b*cos(3*uu+q2));
+   float x = R * (1 +a*cos(2*(uu)+q1));
+   float y = R * (b*cos(3*(uu)+q2));
    angulo.add(new PVector(x,y));
    popMatrix();
  }

@@ -23,8 +23,6 @@ void draw(){
   rect(2*videoScale, 0*videoScale, videoScale, videoScale);
   drawC();
   
-  //noFill();
-  
   drawD();
    
   fill(150,0,150);
@@ -83,7 +81,6 @@ if(nivel==0){
 line(ax,ay,bx,by);
 return;
 }
-//calcular c,d,e
 PVector c = new PVector(((b.x-a.x)*1/3) + a.x,((b.y-a.y)*1/3) + a.y);
 PVector d = new PVector(((b.x-a.x)*2/3) + a.x,((b.y-a.y)*2/3) + a.y);
 PVector e = new PVector((((d.x-c.x)*cos(teta))+((d.y-c.y)*sin(teta)))+c.x,(((d.y-c.y)*cos(teta))-((d.x-c.x)*sin(teta)))+c.y);
@@ -96,7 +93,6 @@ Koch(d,b,nivel-1);
 int y = 0;
  void drawB(){ 
   pushMatrix();
-  //Altera o nivel da curva de Koch
   if (frameCount % (2*int(frameRate)) == 0) {
     y++;
     if (y > 5){
@@ -197,11 +193,11 @@ void drawF(){
 }
 
 ArrayList<PVector> angulo = new ArrayList<PVector>();
-  float a = 0.2;
-  float b = 0.7;
-  float R = 10;
-  float q1 = 3;
-  float q2 = 4;
+  float a = 0.4;
+  float b = 0.5;
+  float R = 100;
+  float q1 = 30;
+  float q2 = 40;
   float uu = 0;
 void drawG(){
 pushMatrix();  
@@ -210,7 +206,10 @@ pushMatrix();
   beginShape();
   for (PVector v : angulo){
   vertex(v.x, v.y);
-  if (uu > TWO_PI){
+  }
+  if (frameCount % (2*int(frameRate)) == 0) {
+   uu++;
+   if (uu > TWO_PI){
      uu = 0;
    }
   }

@@ -193,49 +193,50 @@ void drawF(){
 }
 
 ArrayList<PVector> angulo = new ArrayList<PVector>();
-void drawG(){
-pushMatrix();  
-  translate(0,0);
-  translate(150,750);
-  beginShape();
-  for (PVector v : angulo){
-    vertex(v.x, v.y);
-  }
-  endShape(CLOSE);
   float a = 0.2;
   float b = 0.7;
   float R = 10;
   float q1 = 3;
   float q2 = 4;
   float uu = 0;
-   float x = R * (1 +A*cos(2uu+q1));
-   float y = R * (b*cos(3uu+q2));
+void drawG(){
+pushMatrix();  
+  translate(0,0);
+  translate(150,750);
+  beginShape();
+  for (PVector v : angulo){
+  for(float uu = 0; uu < TWO_PI; uu += 0.01) {
+  vertex(v.x, v.y);
+  } 
+  }
+  endShape(CLOSE);
+  float x = R * (1 +a*cos(2*uu+q1));
+   float y = R * (b*cos(3*uu+q2));
    angulo.add(new PVector(x,y));
-   a += 0.01;
    popMatrix();
  }
 
-float a = 0;
+float ian = 0;
 void drawH() {
   translate(0,0);
   pushMatrix();
   translate(400,700);
-  rotate(a);
+  rotate(ian);
   rect(-26, -26, 52, 52);
   popMatrix();
   pushMatrix();
   translate(400,800);
-  rotate(a);
+  rotate(ian);
   rect(-26, -26, 52, 52);
   popMatrix();
   pushMatrix();
   translate(500,700);
-  rotate(a);
+  rotate(ian);
   rect(-26, -26, 52, 52);
   popMatrix();
   pushMatrix();
   translate(500,800);
-  rotate(a);
+  rotate(ian);
   rect(-26, -26, 52, 52);
   popMatrix();
   a+=0.05;

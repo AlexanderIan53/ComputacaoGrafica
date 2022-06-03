@@ -6,6 +6,7 @@ void setup(){
  size(900,900); 
  fr = 30; //frameRate;  
  frameRate(fr);
+ rect(0*videoScale, 1*videoScale, videoScale, videoScale);
 }
 
 void draw(){
@@ -22,8 +23,8 @@ void draw(){
   rect(2*videoScale, 0*videoScale, videoScale, videoScale);
   drawC();
   
-  noFill();
-  rect(0*videoScale, 1*videoScale, videoScale, videoScale);
+  //noFill();
+  
   drawD();
    
   fill(150,0,150);
@@ -36,7 +37,7 @@ void draw(){
   
   fill(255,0,0,255);
   rect(0*videoScale, 2*videoScale, videoScale, videoScale);
-  //drawG();
+  drawG();
   
   fill(204, 102, 0);
   rect(1*videoScale, 2*videoScale, videoScale, videoScale);
@@ -98,7 +99,7 @@ int y = 0;
   //Altera o nivel da curva de Koch
   if (frameCount % (2*int(frameRate)) == 0) {
     y++;
-    if (y > 6){
+    if (y > 5){
       y = 0;   
     }
   }
@@ -152,6 +153,9 @@ void drawD(){
   fill(100);
   circle(0,0,7);
   popMatrix();
+  if (frameCount == 1200) {
+  rect(0*videoScale, 1*videoScale, videoScale, videoScale);
+  }
 }
 
 void drawE(){
@@ -240,7 +244,7 @@ void drawH() {
   rotate(ian);
   rect(-26, -26, 52, 52);
   popMatrix();
-  a+=0.05;
+  ian+=0.05;
   
 }
 

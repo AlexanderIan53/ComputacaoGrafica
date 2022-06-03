@@ -202,13 +202,14 @@ void drawG(){
 pushMatrix();  
   translate(0,0);
   translate(150,750);
-  strokeCap(ROUND);
-  strokeWeight(2);
-  stroke(0,0,0);
-   if (frameCount % 1 == 0 && u <= 360) {
-     float r = R(1 +a*cos(2u+q1) +b*cos(3u+q2));
-     point(r);
-     u++;
+  float xr = R * (1 +a*cos(2u+q1));
+  float yr = R * (b*cos(3u+q2));
+  ellipseMode(CENTER);
+  noStroke();
+  fill(200);
+  ellipse(xr, yr, 32, 32); 
+  u += q1;
+  q2 += u;
    }
    popMatrix();
  }

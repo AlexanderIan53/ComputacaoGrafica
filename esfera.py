@@ -3,33 +3,10 @@ import sdl2
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import math
-from PIL import Image
 
 N = 50
-
-def LoadTextures():
-    global texture
-    texture = glGenTextures(1)
-    glBindTexture(GL_TEXTURE_2D, texture)
-    im = Image.open("mapa.png")
-    w, h = im.size
-    if(im.mode == "RGBA"):
-        modo = GL_RGBA
-        data = im.tobytes("raw", "RGBA", 0, -1)
-    else:
-        modo = GL_RGB
-        data = im.tobytes("raw", "RGB", 0, -1)
-    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
-    glTexImage2D(GL_TEXTURE_2D, 0, modo, w, h, 0, modo, GL_UNSIGNED_BYTE, data)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
-    
+ 
 def InitGL(Width, Height):             
-    LoadTextures()
-    glEnable(GL_TEXTURE_2D)
     glClearColor(0.0, 0.0, 0.0, 0.0) 
     glClearDepth(1.0)
     glDepthFunc(GL_LESS)               
@@ -67,19 +44,16 @@ def desenha():
     glLoadIdentity()       
     glTranslatef(0.0,0.0,-3.0)
     glRotatef(a,0.0,1.0,0.0)      
-    glBindTexture(GL_TEXTURE_2D, texture)
     for i in range(0,N):
         glBegin(GL_TRIANGLE_STRIP)
         for j in range(0,N+1):
             x, y, z = coordenadaEsferica(i,j)
-            r, g, b = cor(j,(i-1)
+            r, g, b = cor(i,j)
             glColor3f(r,g,b)
-            glTextCoord2f(j/(N),i/(N))
             glVertex3f(x,y,z)
             x, y, z = coordenadaEsferica(i-1,j)
             r, g, b = cor(i-1,j)
             glColor3f(r,g,b)
-            glTextCoord2f(j/(N),i/(N))
             glVertex3f(x,y,z)
         glEnd()
     a+=1

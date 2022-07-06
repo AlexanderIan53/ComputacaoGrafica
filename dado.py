@@ -7,39 +7,39 @@ import math
 from PIL import Image
 
 vertices = (
-    ( 1,-1,-1),
-    ( 1, 1,-1),
-    (-1, 1,-1),
-    (-1,-1,-1),
-    ( 1,-1, 1),
-    ( 1, 1, 1),
-    (-1,-1, 1),
-    (-1, 1, 1),
-    )
+	( 1,-1,-1),
+	( 1, 1,-1),
+	(-1, 1,-1),
+	(-1,-1,-1),
+	( 1,-1, 1),
+	( 1, 1, 1),
+	(-1,-1, 1),
+	(-1, 1, 1),
+)
 
 linhas = (
-    (0,1),
-    (0,3),
-    (0,4),
-    (2,1),
-    (2,3),
-    (2,7),
-    (6,3),
-    (6,4),
-    (6,7),
-    (5,1),
-    (5,4),
-    (5,7),
-    )
+	(0,1),
+	(0,3),
+	(0,4),
+	(2,1),
+	(2,3),
+	(2,7),
+	(6,3),
+	(6,4),
+	(6,7),
+	(5,1),
+	(5,4),
+	(5,7),
+)
 
 faces = (
-    (0,1,2,3),
-    (3,2,7,6),
-    (6,7,5,4),
-    (4,5,1,0),
-    (1,5,7,2),
-    (4,0,3,6)
-    )
+	(0,1,2,3),
+	(3,2,7,6),
+	(6,7,5,4),
+	(4,5,1,0),
+	(1,5,7,2),
+	(4,0,3,6)
+)
 
 cores = ( (1,0,0),(1,1,0),(0,1,0),(0,1,1),(0,0,1),(1,0,1),(0.5,1,1),(1,0,0.5) )
 
@@ -75,8 +75,16 @@ def InitGL(Width, Height):
     glMatrixMode(GL_PROJECTION)
     gluPerspective(45.0, float(Width)/float(Height), 0.1, 100.0)
     glMatrixMode(GL_MODELVIEW)
+    gluLookAt(0,0,10,0,0,0,0,1,0)
+
 
 def Cubo():
+    global a
+    glPushMatrix()
+    glRotatef(a,1,0,0)
+    glRotatef(a/4,0,1,0)
+    glRotatef(a/2,0,0,1)
+    a += 1
     glBegin(GL_QUADS)
     glTexCoord2f(0.0, 0.0); glVertex3f(-1.0, -1.0,  1.0)    
     glTexCoord2f(0.0, 1/2); glVertex3f( 1.0, -1.0,  1.0)   
@@ -84,36 +92,37 @@ def Cubo():
     glTexCoord2f(1/3, 0.0); glVertex3f(-1.0,  1.0,  1.0)  
 
     # Back Face
-    glTexCoord2f(1.0, 0.0); glVertex3f(-1.0, -1.0, -1.0)    
-    glTexCoord2f(1.0, 1.0); glVertex3f(-1.0,  1.0, -1.0)    
-    glTexCoord2f(0.0, 1.0); glVertex3f( 1.0,  1.0, -1.0)    
-    glTexCoord2f(0.0, 0.0); glVertex3f( 1.0, -1.0, -1.0)   
+    glTexCoord2f(2/3, 1/2); glVertex3f(-1.0, -1.0, -1.0)    
+    glTexCoord2f(2/3, 1.0); glVertex3f(-1.0,  1.0, -1.0)    
+    glTexCoord2f(1.0, 1.0); glVertex3f( 1.0,  1.0, -1.0)    
+    glTexCoord2f(1.0, 1/2); glVertex3f( 1.0, -1.0, -1.0)   
     
     # Top Face
-    glTexCoord2f(0.0, 1.0); glVertex3f(-1.0,  1.0, -1.0)   
-    glTexCoord2f(0.0, 0.0); glVertex3f(-1.0,  1.0,  1.0)    
-    glTexCoord2f(1.0, 0.0); glVertex3f( 1.0,  1.0,  1.0)    
-    glTexCoord2f(1.0, 1.0); glVertex3f( 1.0,  1.0, -1.0)   
+    glTexCoord2f(0.0, 1/2); glVertex3f(-1.0,  1.0, -1.0)   
+    glTexCoord2f(0.0, 1.0); glVertex3f(-1.0,  1.0,  1.0)    
+    glTexCoord2f(1/3, 1.0); glVertex3f( 1.0,  1.0,  1.0)    
+    glTexCoord2f(1/3, 1/2); glVertex3f( 1.0,  1.0, -1.0)   
 
     # Bottom Face       
-    glTexCoord2f(1.0, 1.0); glVertex3f(-1.0, -1.0, -1.0)   
-    glTexCoord2f(0.0, 1.0); glVertex3f( 1.0, -1.0, -1.0)   
-    glTexCoord2f(0.0, 0.0); glVertex3f( 1.0, -1.0,  1.0)   
+    glTexCoord2f(2/3, 0.0); glVertex3f(-1.0, -1.0, -1.0)   
+    glTexCoord2f(2/3, 1/2); glVertex3f( 1.0, -1.0, -1.0)   
+    glTexCoord2f(1.0, 1/2); glVertex3f( 1.0, -1.0,  1.0)   
     glTexCoord2f(1.0, 0.0); glVertex3f(-1.0, -1.0,  1.0)    
     
     # Right face
-    glTexCoord2f(1.0, 0.0); glVertex3f( 1.0, -1.0, -1.0)    
-    glTexCoord2f(1.0, 1.0); glVertex3f( 1.0,  1.0, -1.0)   
-    glTexCoord2f(0.0, 1.0); glVertex3f( 1.0,  1.0,  1.0)    
-    glTexCoord2f(0.0, 0.0); glVertex3f( 1.0, -1.0,  1.0)  
+    glTexCoord2f(1/3, 0.0); glVertex3f( 1.0, -1.0, -1.0)    
+    glTexCoord2f(1/3, 1/2); glVertex3f( 1.0,  1.0, -1.0)   
+    glTexCoord2f(2/3, 1/2); glVertex3f( 1.0,  1.0,  1.0)    
+    glTexCoord2f(2/3, 0.0); glVertex3f( 1.0, -1.0,  1.0)  
     
     # Left Face
-    glTexCoord2f(0.0, 0.0); glVertex3f(-1.0, -1.0, -1.0)  
-    glTexCoord2f(1.0, 0.0); glVertex3f(-1.0, -1.0,  1.0)    
-    glTexCoord2f(1.0, 1.0); glVertex3f(-1.0,  1.0,  1.0)   
-    glTexCoord2f(0.0, 1.0); glVertex3f(-1.0,  1.0, -1.0)   
+    glTexCoord2f(1/3, 1/2); glVertex3f(-1.0, -1.0, -1.0)  
+    glTexCoord2f(1/3, 1.0); glVertex3f(-1.0, -1.0,  1.0)    
+    glTexCoord2f(2/3, 1.0); glVertex3f(-1.0,  1.0,  1.0)   
+    glTexCoord2f(2/3, 1/2); glVertex3f(-1.0,  1.0, -1.0)   
     
     glEnd()                
+    glPopMatrix()
 
     # glColor3f(0,0.5,0)
     # glBegin(GL_LINES)
@@ -130,7 +139,7 @@ def desenha():
     global a
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
     glPushMatrix()
-    glTranslatef(0,-2,0)
+    glTranslatef(0,0,0)
     Cubo()
     glPopMatrix()
     a += 1
@@ -150,11 +159,7 @@ if not window:
     sys.stderr.write("Error: Could not create window\n")
     exit(1)
 glcontext = sdl2.SDL_GL_CreateContext(window)
-glEnable(GL_MULTISAMPLE)
-glEnable(GL_DEPTH_TEST)
-glClearColor(0.,0.,0.,1.)
-gluPerspective(45,800.0/600.0,0.1,100.0)
-glTranslatef(0.0,0.0,-20)
+InitGL(WINDOW_WIDTH,WINDOW_HEIGHT)
 
 running = True
 event = sdl2.SDL_Event()
@@ -168,3 +173,4 @@ while running:
                 running = False
     desenha()
     sdl2.SDL_GL_SwapWindow(window)
+

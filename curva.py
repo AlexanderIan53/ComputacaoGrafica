@@ -2,11 +2,10 @@ import sys
 import sdl2
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from math import *
 import math
-from math import sqrt
 
-N = 20
- 
+
 def InitGL(Width, Height):             
     glClearColor(0.0, 0.0, 0.0, 0.0) 
     glClearDepth(1.0)
@@ -35,18 +34,6 @@ def InitGL(Width, Height):
     glEnable(GL_MULTISAMPLE)
     gluLookAt(0,0,10,0,0,0,0,1,0)
 
-def map(valor, v0, vf, m0, mf):
-    return m0+(((valor-v0)*(mf-m0))/(vf-v0))
- 
-
-def cor(i,j):
-    theta = map(i,0,N,-math.pi/2,math.pi/2)
-    phy = map(j,0,N,0,2*math.pi)
-    r = 0.5+0.5*math.sin(theta)
-    g = 0.5+0.5*math.cos(phy)
-    b = r
-    return r, g, b
-
 def calculaNormal(v0,v1,v2):
     x = 0
     y = 1
@@ -57,6 +44,21 @@ def calculaNormal(v0,v1,v2):
     NLength = sqrt(N[x]*N[x]+N[y]*N[y]+N[z]*N[z])
     return ( N[x]/NLength, N[y]/NLength, N[z]/NLength)
 
+def map(valor, v0, vf, m0, mf):
+    return m0+(((valor-v0)*(mf-m0))/(vf-v0))
+ 
+def cor(i,j):
+    theta = map(i,0,N,-math.pi/2,math.pi/2)
+    phy = map(j,0,N,0,2*math.pi)
+    r = 0.5+0.5*math.sin(theta)
+    g = 0.5+0.5*math.cos(phy)
+    b = r
+    return r, g, b
+
+def f(x,y):
+	return x**2 - y**2   #Mudar pra +
+
+N = 20
 a=0
 r=1
 x0=-2
@@ -66,9 +68,9 @@ yf=2
 dx= (xf-x0)/(N)
 dy= (yf-y0)/(N)
 
-def f(x,y):
-	return x**2 - y**2
-	
+#def emiteVertex(x,y):
+    
+
 def desenha():
     global a
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)    
@@ -79,13 +81,20 @@ def desenha():
     for i in range(0,N):
         glBegin(GL_TRIANGLE_STRIP)
         x=x0
-        for j in range(0,N+1):
-            z=f(x,y)
-            glColor3f(255, 255, 0)
-            glVertex3f(x,y,z)
-            z=f(x,y+dy)
-            glColor3f(255, 255, 0)
-            glVertex3f(x,y+dy,z)
+        for j in range(0,N+1):   
+            z1=f(x,y)
+            z2=f(x,y+dy)
+            z3=f(x+dx,y)
+            n = calculaNormal((x,y,z1),(x,y+dy,z2),(x+dx,y,z3))
+            glNormal3fv(n)
+            glColor3f(1,1,0)
+            glVertex3f(x,y,z1)
+            glColor3f(1,1,0)
+            glVertex3f(x,y+dy,z2)
+#            glColor3f(1,1,0)
+#            glVertex3f(x+dx,y,z3)
+
+
             x += dx   
         y += dy
         glEnd()       
@@ -101,7 +110,7 @@ sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_CONTEXT_PROFILE_MASK,sdl2.SDL_GL_CONTEXT_PR
 sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_DOUBLEBUFFER, 1)
 sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_DEPTH_SIZE, 24)
 sdl2.SDL_GL_SetSwapInterval(1)
-window = sdl2.SDL_CreateWindow(b"Curva", sdl2.SDL_WINDOWPOS_CENTERED, sdl2.SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, sdl2.SDL_WINDOW_OPENGL | sdl2.SDL_WINDOW_SHOWN)
+window = sdl2.SDL_CreateWindow(b"Paraboloide", sdl2.SDL_WINDOWPOS_CENTERED, sdl2.SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, sdl2.SDL_WINDOW_OPENGL | sdl2.SDL_WINDOW_SHOWN)
 if not window:
     sys.stderr.write("Error: Could not create window\n")
     exit(1)
@@ -118,4 +127,3 @@ while running:
                 running = False
     desenha()
     sdl2.SDL_GL_SwapWindow(window)
-      

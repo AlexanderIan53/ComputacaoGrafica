@@ -18,59 +18,6 @@ def InitGL(Width, Height):
 
 def map(valor, v0, vf, m0, mf):
     return m0+(((valor-v0)*(mf-m0))/(vf-v0))
-
-def coordenadaEsferica(i,j):
-    theta = map(i,0,N,-math.pi/2,math.pi/2)
-    phy = map(j,0,N,0,2*math.pi)
-    x = r * math.cos(theta)*math.cos(phy)
-    y = r * math.sin(theta)
-    z = r * math.cos(theta)*math.sin(phy)
-    return x, y, z
-
-def cor(i,j):
-    theta = map(i,0,N,-math.pi/2,math.pi/2)
-    phy = map(j,0,N,0,2*math.pi)
-    r = 0.5+0.5*math.sin(theta)
-    g = 0.5+0.5*math.cos(phy)
-    b = r
-    return r, g, b
-
-
-a=0
-r=1
-def desenha():
-    global a
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)    
-    glLoadIdentity()       
-    glTranslatef(0.0,0.0,-3.0)
-    glRotatef(a,0.0,1.0,0.0)      
-    for i in range(0,N):
-        glBegin(GL_TRIANGLE_STRIP)
-        for j in range(0,N+1):
-            x, y, z = coordenadaEsferica(i,j)
-            r, g, b = cor(i,j)
-            glColor3f(r,g,b)
-            glVertex3f(x,y,z)
-            import sys
-import sdl2
-from OpenGL.GL import *
-from OpenGL.GLU import *
-import math
-
-N = 50
- 
-def InitGL(Width, Height):             
-    glClearColor(0.0, 0.0, 0.0, 0.0) 
-    glClearDepth(1.0)
-    glDepthFunc(GL_LESS)               
-    glEnable(GL_DEPTH_TEST)            
-    glShadeModel(GL_SMOOTH)            
-    glMatrixMode(GL_PROJECTION)
-    gluPerspective(45.0, float(Width)/float(Height), 0.1, 100.0)
-    glMatrixMode(GL_MODELVIEW)
-
-def map(valor, v0, vf, m0, mf):
-    return m0+(((valor-v0)*(mf-m0))/(vf-v0))
  
 
 def cor(i,j):

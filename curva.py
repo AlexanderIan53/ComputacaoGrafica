@@ -3,8 +3,9 @@ import sdl2
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import math
+from math import sqrt
 
-N = 50
+N = 20
  
 def InitGL(Width, Height):             
     glClearColor(0.0, 0.0, 0.0, 0.0) 
@@ -15,6 +16,24 @@ def InitGL(Width, Height):
     glMatrixMode(GL_PROJECTION)
     gluPerspective(45.0, float(Width)/float(Height), 0.1, 100.0)
     glMatrixMode(GL_MODELVIEW)
+
+    #LUZ!!!
+    mat_ambient = (0.4, 0.0, 0.0, 1.0)
+    mat_diffuse = (1.0, 0.0, 0.0, 1.0)
+    mat_specular = (1.0, 0.5, 0.5, 1.0)
+    mat_shininess = (50,)
+    light_position = (0, 10, 10)
+    glShadeModel(GL_SMOOTH)
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient)
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse)
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular)
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess)
+    glEnable(GL_LIGHTING)
+    glEnable(GL_LIGHT0)
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position)
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_MULTISAMPLE)
+    gluLookAt(0,0,10,0,0,0,0,1,0)
 
 def map(valor, v0, vf, m0, mf):
     return m0+(((valor-v0)*(mf-m0))/(vf-v0))
@@ -28,6 +47,15 @@ def cor(i,j):
     b = r
     return r, g, b
 
+def calculaNormal(v0,v1,v2):
+    x = 0
+    y = 1
+    z = 2
+    U = ( v2[x]-v0[x], v2[y]-v0[y], v2[z]-v0[z] )
+    V = ( v1[x]-v0[x], v1[y]-v0[y], v1[z]-v0[z] )
+    N = ( (U[y]*V[z]-U[z]*V[y]),(U[z]*V[x]-U[x]*V[z]),(U[x]*V[y]-U[y]*V[x]))
+    NLength = sqrt(N[x]*N[x]+N[y]*N[y]+N[z]*N[z])
+    return ( N[x]/NLength, N[y]/NLength, N[z]/NLength)
 
 a=0
 r=1
@@ -39,7 +67,7 @@ dx= (xf-x0)/(N)
 dy= (yf-y0)/(N)
 
 def f(x,y):
-	return x**2 + y**2
+	return x**2 - y**2
 	
 def desenha():
     global a
@@ -53,10 +81,10 @@ def desenha():
         x=x0
         for j in range(0,N+1):
             z=f(x,y)
-            glColor3f(1,0,0)
+            glColor3f(255, 255, 0)
             glVertex3f(x,y,z)
             z=f(x,y+dy)
-            glColor3f(1,0,0)
+            glColor3f(255, 255, 0)
             glVertex3f(x,y+dy,z)
             x += dx   
         y += dy

@@ -1,0 +1,54 @@
+float s= 0.01;
+float stroke = 0.02;
+
+float circulo(in vec2 c, in float r, in vec2 uv){
+    float d = distance(c, uv);
+    return 1.0-smoothstep(r-s,r+s,d);
+    }
+    
+float circunferencial(in vec2 c, in float r, in vec2 uv){
+    return circulo(c,r,uv) - circulo(c,r-stroke,uv);
+    }
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    /*
+    vec2 uv = fragCoord/iResolution.xy;
+    */
+    vec2 uvt = fragCoord/iResolution.xy;
+    vec2 uv = (2.0*(fragCoord/iResolution.xy))-1.0;
+    uv.x *= iResolution.x/iResolution.y;
+    
+    float raio = cos(iTime)/4.0+0.4;
+    float cor = circunferencial(vec2(0.5,0.0), raio,uv)+circulo(vec2(-0.5,0.0),raio,uv);
+    
+    vec3 amarelo = vec3(1.0,1.0,0.0);
+    vec3 azul = vec3(0.0,0.0,0.5);
+    
+    vec4 txtr = texture(iChannel0,uvt);
+    vec4 dame = texture(iChannel1,uvt);
+    
+    /*
+    vec2 centro = vec2(0.0,0.0);
+    float d = distance(centro, uv);
+    float r = 0.8;
+    float s = 0.01;
+    */
+    // Time varying pixel color
+    /*
+    vec3 col = vec3(uv.x);
+    */
+    /*
+    vec3 col = vec3(1.0-step(0.5,uv.x));
+    */    
+    /*
+    vec3 col = vec3(1.0-step(r,d));
+    */
+    /*
+    vec3 col = vec3(1.0-smoothstep(r-s,r+s,d));
+    */
+    
+    // Output to screen
+    // fragColor = vec4(cor*amarelo+(1.0-cor)*azul,1.0);
+    fragColor = cor*txtr+(1.0-cor)*dame, 1.0;

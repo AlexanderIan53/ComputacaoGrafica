@@ -1,6 +1,6 @@
-#version 400
+#version 130
 
-layout (location=0) in vec3 position;
+in vec3 position;
 uniform mat4 MVP;
 
 void main(void) 
